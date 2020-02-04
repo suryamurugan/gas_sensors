@@ -15,14 +15,14 @@
 // This file contains your configuration used to connect to Cloud IoT Core
 
 // Wifi network details.
-const char *ssid = "CommunitiesInAtria";
+const char *ssid = "communitiesinatria";
 const char *password = "ciaquinjet";
 
 // Cloud iot details.
-const char *project_id = "hydroponics-265005";
+const char *project_id = "hydroponics-cia";
 const char *location = "asia-east1";
-const char *registry_id = "my-registry";
-const char *device_id = "my-device";
+const char *registry_id = "hydroponics-registry";
+const char *device_id = "esp321";
 
 // Configuration for NTP
 const char* ntp_primary = "pool.ntp.org";
@@ -41,9 +41,9 @@ const char* ntp_secondary = "time.nist.gov";
 // it's smaller add "00:" to the start. If it's too big or too small something
 // is probably wrong with your key.
 const char *private_key_str =
-    "da:7f:8e:14:d7:9f:00:42:e9:4e:35:7a:d9:19:b7:"
-    "cb:d2:f0:cc:21:79:e3:9d:0a:36:6d:a1:da:5a:df:"
-    "19:1b";
+    "50:ed:dc:a1:a4:51:83:05:59:cd:ce:eb:08:f0:5e:"
+    "8e:05:92:95:2b:1c:8a:8d:1f:1d:ea:6d:aa:43:c0:"
+    "d5:73";
 
 // Time (seconds) to expire token += 20 minutes for drift
 const int jwt_exp_secs = 3600; // Maximum 24H (3600*24)
