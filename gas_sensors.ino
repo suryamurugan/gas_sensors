@@ -7,7 +7,7 @@
 int MQGetGasPercentage(float, int);
 int  MQGetPercentage(float, float);
 
-DHT dht(35,DHT22 ); //// Initialize DHT sensor for normal 16mhz Arduino
+DHT dht(4,DHT22 ); //// Initialize DHT sensor for normal 16mhz Arduino
 int chk;
 float hum;  //Stores humidity value
 float temp; //Stores temperature value
@@ -29,7 +29,7 @@ char charBuf[150] ;
                                                      //normal operation
 
 
-#define         MG_PIN                       32     //define which analog input channel you are going to use
+#define         MG_PIN                       35     //define which analog input channel you are going to use
 #define         BOOL_PIN                     (2)
 #define         DC_GAIN                      (8.5)   //define the DC gain of amplifier
 
@@ -63,6 +63,8 @@ void setup() {
   
   pinMode(LED_BUILTIN, OUTPUT);
   dht.begin();
+  
+  pinMode(4, INPUT);
   Serial.print("Initializing\nCalibrating...\n");               
   Ro = MQCalibration(MQ_PIN);
   //Calibrating the sensor. Please make sure the sensor is in clean air when you perform the calibration              
@@ -88,6 +90,7 @@ String dht22()
   float h = dht.readHumidity();
   // Read temperature as Celsius (the default)
   float t = dht.readTemperature();
+  Serial.println(dht.readTemperature());
   // Check if any reads failed and exit early (to try again).
   if (isnan(h) || isnan(t) )
   {
