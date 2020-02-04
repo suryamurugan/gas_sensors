@@ -76,7 +76,7 @@ void setup() {
   pinMode(BOOL_PIN, INPUT);                        //setpin to input
   digitalWrite(BOOL_PIN, HIGH);                    //turn on pullup resistors
   Serial.print("Done Init\n");                
-  //setupCloudIoT();
+                          setupCloudIoT();
 }
 
 unsigned long lastMillis = 0;
@@ -288,13 +288,14 @@ float sensor_volt;
 void loop() {
     delay(2000);
     //Read data and store it to variables hum and temp
-    //mqtt->loop();
+    mqtt->loop();
     delay(10);  // <- fixes some issues with WiFi stability
 
- // if (!mqttClient->connected()) {
-  ///  connect();
-    
-//}
+  if (!mqttClient->connected()) {
+    connect();
+  }
+
+
 
    doc["h2"]= h2();
    doc["co"]= co();
@@ -305,19 +306,17 @@ void loop() {
    serializeJson(doc,charBuf);
    serializeJson(doc,Serial);
    Serial.println(" ");
+
+    if (millis() - lastMillis > 60000) {
+    lastMillis = millis();
+    if(getStatus()){
+        Serial.println("Going to Publish" + charbuf) ;
+        publishTelemetry(charBuf);
+      }
+    
+  }
+
   
 
-
-  // doc["humiditya"]=dht22().substring(0,5);
-  // doc["tempa"] = dht22().substring(6,11);
-  // doc["airpurity"] = Airquality();
-   //doc["watertemp"] =  water_temp();//== NULL ?float(0):water_temp() ;
-   //doc["ph"] = pH_value();//== NULL ?float(0):pH_value() ; 
-  // publish a message roughly every second.
-  //if (millis() - lastMillis > 60000) {
- //   lastMillis = millis();
-    //publishTelemetry(mqttClient, "/sensors", getDefaultSensor());
-   // publishTelemetry(charBuf);
-   // free(charBuf);
   
 }

@@ -25,12 +25,24 @@
 #include <CloudIoTCore.h>
 #include <CloudIoTCoreMqtt.h>
 #include "ciotc_config.h" // Update this file with your configuration
-
+int send = 0 ;
 // !!REPLACEME!!
 // The MQTT callback function for commands and configuration updates
 // Place your message handler code here.
 void messageReceived(String &topic, String &payload) {
   Serial.println("incoming: " + topic + " - " + payload);
+  if(topic=="/devices/esp321/commands"){
+        Serial.println("yay !! We recieved a commands and it is "+ payload) ;
+    }
+  if(topic=="/devices/esp321/config"){
+        Serial.println("yay !! We recieved a config and it is "+ payload) ;
+        if(payload=="start"){
+            send = 1 ;
+          }
+        if(payload=="stop"){
+            send = 0 ;
+          }
+    }
 }
 ///////////////////////////////
 
@@ -46,8 +58,13 @@ String jwt;
 // Helpers specific to this board
 ///////////////////////////////
 String getDefaultSensor() {
-  return  "Wifi: " + String(WiFi.RSSI()) + "db";
+  // return  "Wifi: " + String(WiFi.RSSI()) + "db";
+  return "{\"wifi\": 25}" ;
 }
+
+int getStatus() {
+    return send;
+  }
 
 String getJwt() {
   iss = time(nullptr);
